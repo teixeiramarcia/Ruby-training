@@ -1,0 +1,40 @@
+<h1>Profile</h1>
+
+<p><b>Name: </b><%= @user.name %></p>
+<p><b>Email: </b><%= @user.email %></p>
+
+<ul>
+  <li><%= link_to "Edit", edit_user_path(@user) %></li>
+  <li><%= link_to "Destroy", user_path(@user), data: 
+    { turbo_method: :delete,
+      turbo_confirm: "Are you sure?"
+    } %></li>
+</ul>
+
+<hr class="dotted">
+
+<h2>Microposts</h2>
+<% @user.microposts.each do |micropost| %>
+  <p>
+    <strong>Post: </strong>
+    <%= micropost.content %>
+    (<%= micropost.created_at %>)
+  </p>
+<% end %>
+
+<hr class="dotted">
+
+<h2>Add a Micropost:</h2>
+<%= form_with model: [ @user, @user.microposts.build ] do |form| %>
+  <p>
+    <%= form.label :user_id %><br>
+    <%= form.number_field :user_id %>
+  </p>
+  <p>
+    <%= form.label :content %><br>
+    <%= form.text_area :content %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
